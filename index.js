@@ -1,14 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import * as path from "path";
+import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 import { engine } from 'express-handlebars';
-import { PORT } from './configs/constantes.js';
+import { BASE_URL, PORT, SECRET } from './configs/constantes.js';
 import db from './configs/db.js';
 
 import skatersRoutes from './routes/skaters.routes.js';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
@@ -35,9 +36,9 @@ app.set('views', './views');
 
 //Archivos estaticos
 app.use(express.static('public'));
-app.use('/css',express.static(`${__dirname}/public/assets/css`));
-app.use('/js',express.static(`${__dirname}/public/assets/js`));
-app.use('/img',express.static(`${__dirname}/public/assets/img`));
+app.use('/css', express.static(`${__dirname}/public/assets/css`));
+app.use('/js', express.static(`${__dirname}/public/assets/js`));
+app.use('/img', express.static(`${__dirname}/public/assets/img`));
 
 // Middlewares
 app.use(cors());
@@ -47,7 +48,7 @@ app.use(morgan('dev'));
 
 // Routes
 app.get('/', async (req, res) => {
-	const data = await fetch('http://localhost:3001/api/skaters');
+	const data = await fetch(`${BASE_URL}:${PORT}/api/skaters`);
 	const { skaters } = await data.json();
 
 	res.render('lista', { skaters });
@@ -63,9 +64,9 @@ app.get('/login', (req, res) => {
 
 app.get('/skater', (req, res) => {
 	// const token = req.headers.authorization.split(' ')[1];
-	// const data = token.verify(token, process.env.SECRET);
+	// const data = token.verify(token, SECRET);
 
-	// const data = await fetch(`http://localhost:3001/api/skaters/${data.id}`)
+	// const data = await fetch(`${BASE_URL}:${PORT}/api/skaters/${data.id}`)
 	// const { skater } = await data.json();
 
 	// res.render('datos', { skater });
@@ -73,16 +74,15 @@ app.get('/skater', (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-	const data = await fetch('http://localhost:3001/api/skaters');
+	const data = await fetch(`${BASE_URL}:${PORT}/api/skaters`);
 	const { skaters } = await data.json();
 
 	res.render('admin', { skaters });
 });
 
 app.use('/api/skaters', skatersRoutes);
-
-// app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
-	console.log(`Servidor activo en http://localhost:${PORT}`);
+	console.log(`Servidor activo en ${BASE_URL}:${PORT}`);
 });
