@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import * as path from "path";
+import { fileURLToPath } from 'url';
 
 import { engine } from 'express-handlebars';
 import { PORT } from './configs/constantes.js';
@@ -10,9 +12,11 @@ import skatersRoutes from './routes/skaters.routes.js';
 
 const app = express();
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 // Database
 try {
-	await db.sync({ force: false });
+	await db.sync({ force: true });
 } catch (error) {
 	console.log(error);
 }
@@ -28,7 +32,12 @@ app.engine(
 );
 app.set('view engine', 'hbs');
 app.set('views', './views');
+
+//Archivos estaticos
 app.use(express.static('public'));
+app.use('/css',express.static(`${__dirname}/public/assets/css`));
+app.use('/js',express.static(`${__dirname}/public/assets/js`));
+app.use('/img',express.static(`${__dirname}/public/assets/img`));
 
 // Middlewares
 app.use(cors());

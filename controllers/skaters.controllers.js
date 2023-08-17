@@ -13,6 +13,7 @@ export const createSkater = async (req, res) => {
 	const skater = await service.createSkater(req, res);
 
 	return res.status(skater.code).json({
+		code:skater.code,
 		message: skater.message,
 		skater: skater.skater,
 	});
