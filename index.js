@@ -16,7 +16,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Database
 try {
-	await db.sync({ force: true });
+	await db.sync({ force: false });
 } catch (error) {
 	console.log(error);
 }
@@ -42,7 +42,7 @@ app.use('/img',express.static(`${__dirname}/public/assets/img`));
 // Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // Routes

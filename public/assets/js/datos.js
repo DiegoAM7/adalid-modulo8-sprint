@@ -1,13 +1,16 @@
-const form_regisro = document.querySelector('#form_regisro');
+const form_datos = document.querySelector('#form_datos');
+const actualizarBtn = document.querySelector('#actualizarBtn');
+const eliminarBtn = document.querySelector('#eliminarBtn');
+
 const emailInput = document.querySelector('#email');
 const nombreInput = document.querySelector('#nombre');
 const passwordInput = document.querySelector('#password');
 const rePasswordInput = document.querySelector('#repassword');
 const aniosExperienciaInput = document.querySelector('#aniosExperiencia');
 const especialidadInput = document.querySelector('#especialidad');
-const fotoPerfilInput = document.querySelector('#fotoPerfiln');
 
-form_regisro.addEventListener('submit', async (e) => {
+
+actualizarBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
     const emailValue = emailInput.value;
@@ -16,7 +19,6 @@ form_regisro.addEventListener('submit', async (e) => {
     const rePasswordValue = rePasswordInput.value;
     const aniosExperienciaValue = aniosExperienciaInput.value;
     const especialidadValue = especialidadInput.value;
-    const fotoPerfilValue = fotoPerfilInput;
     
     
     const result = validaciones(
@@ -26,23 +28,20 @@ form_regisro.addEventListener('submit', async (e) => {
         rePasswordValue,
         aniosExperienciaValue,
         especialidadValue,
-        fotoPerfilValue
     )
-    console.log(result);
+
     if (result === true) {
         const registro = {
             email: `${emailValue}`,
             nombre: `${emailValue}`,
             password: `${emailValue}`,
             anos_experiencia: `${emailValue}`,
-            especialidad: `${emailValue}`,
-            foto: "url_de_la_foto.jpg",
-            estado: true
+            especialidad: `${emailValue}`
         }
 
         try {
             const response = await fetch('http://localhost:3001/api/skaters', {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
