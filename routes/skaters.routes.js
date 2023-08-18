@@ -5,12 +5,13 @@ import {
 	deleteSkater,
 } from '../controllers/skaters.controllers.js';
 import { Router } from 'express';
+import { auth } from '../auth/authAutorizacion.js';
 
 const router = Router();
 
-router.get('/', getSkaters);
-router.post('/', createSkater);
-router.put('/:id', updateSkater);
-router.delete('/:id', deleteSkater);
+router.get('/', auth, getSkaters);
+router.post('/', auth, createSkater);
+router.put('/:id', auth, updateSkater);
+router.delete('/:id', auth, deleteSkater);
 
 export default router;

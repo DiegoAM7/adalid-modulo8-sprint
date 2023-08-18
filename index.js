@@ -9,6 +9,7 @@ import { PORT } from './configs/constantes.js';
 import db from './configs/db.js';
 
 import skatersRoutes from './routes/skaters.routes.js';
+import authRoutes from './routes/auth.routes.js'
 
 const app = express();
 
@@ -35,9 +36,9 @@ app.set('views', './views');
 
 //Archivos estaticos
 app.use(express.static('public'));
-app.use('/css',express.static(`${__dirname}/public/assets/css`));
-app.use('/js',express.static(`${__dirname}/public/assets/js`));
-app.use('/img',express.static(`${__dirname}/public/assets/img`));
+app.use('/css', express.static(`${__dirname}/public/assets/css`));
+app.use('/js', express.static(`${__dirname}/public/assets/js`));
+app.use('/img', express.static(`${__dirname}/public/assets/img`));
 
 // Middlewares
 app.use(cors());
@@ -56,6 +57,7 @@ app.get('/', async (req, res) => {
 app.get('/registro', (req, res) => {
 	res.render('registro');
 });
+
 
 app.get('/login', (req, res) => {
 	res.render('login');
@@ -80,6 +82,7 @@ app.get('/admin', async (req, res) => {
 });
 
 app.use('/api/skaters', skatersRoutes);
+app.use('/api/auth',authRoutes);
 
 // app.use('/api/auth', authRoutes);
 
