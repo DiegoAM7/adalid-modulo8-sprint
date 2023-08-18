@@ -4,7 +4,6 @@ export const signUp = async (req, res) => {
     if (!req.body) {
         res.status(400).send({ message: 'content can not be empty' });
     }
-    
     const result = await service.signUp( req , res);
 
     if (result?.error !== undefined) {
