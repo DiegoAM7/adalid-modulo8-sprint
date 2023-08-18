@@ -15,11 +15,11 @@ form_login.addEventListener('submit', async(e)=>{
     if (result === true) {
         const registro = {
             email: `${emailValue}`,
-            password: `${emailValue}`
+            password: `${passwordValue}`
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/skaters', {
+            const response = await fetch('http://localhost:3001/api/auth/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

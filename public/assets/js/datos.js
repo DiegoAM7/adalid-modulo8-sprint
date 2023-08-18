@@ -33,14 +33,14 @@ actualizarBtn.addEventListener('click', async (e) => {
     if (result === true) {
         const registro = {
             email: `${emailValue}`,
-            nombre: `${emailValue}`,
-            password: `${emailValue}`,
-            anos_experiencia: `${emailValue}`,
-            especialidad: `${emailValue}`
+            nombre: `${nombreValue}`,
+            password: `${passwordValue}`,
+            anos_experiencia: `${aniosExperienciaValue}`,
+            especialidad: `${especialidadValue}`
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/skaters', {
+            const response = await fetch('http://localhost:3001/api/skaters/${emailValue}', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

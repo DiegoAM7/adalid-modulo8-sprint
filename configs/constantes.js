@@ -7,3 +7,8 @@ export const DB_USER = process.env.DB_USER || 'root';
 export const DB_PASS = process.env.DB_PASS || 'root';
 export const DB_HOST = process.env.DB_HOST || 'localhost';
 export const DB_DIALECT = process.env.DB_DIALECT || 'mariadb';
+
+export const SECRET_PASS = process.env.SECRET_PASS || 'clavesecreta';
+export const ITERACIONES = process.env.ITERACIONES || 10;
+
+

@@ -1,12 +1,13 @@
+import {
+  SECRET_PASS,
+} from '../configs/constantes.js';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export const auth = (req, res, next) => {
   let { authorization } = req.headers;
-  console.log(authorization);
+
   if (!authorization) {
-    return res.status(401).json({ message: 'Unauthorized access' })
+    return res.status(401).json({ message: 'Acceso no autorizado' })
   }
   try {
     // obtenemos el prefijo y el token.
@@ -14,20 +15,19 @@ export const auth = (req, res, next) => {
     // validamos que el prefijo sea Bearer o Tolen
     if (type === 'Bearer' || type === "Token") {
       // validamos con el SECRET que el token sea valido
-      jwt.verify(token, process.env.SECRET,(err,dedcode)=>{
+      jwt.verify(token, SECRET_PASS, (err, dedcode) => {
         if (err) {
-          
+          // Si el token no es válido.
+          return res.status(401).json({ message: 'Acceso no autorizado' })
         }
-        console.log(dedcode);
       });
-
       next();
     } else {
-      return res.status(401).json({ message: 'Unauthorized access' })
+      return res.status(401).json({ message: 'Acceso no autorizado' })
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'we have an error' })
+    return res.status(500).json({ message: 'Ocurrió un error' })
   }
 
 }

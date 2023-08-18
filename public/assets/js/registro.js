@@ -28,26 +28,27 @@ form_regisro.addEventListener('submit', async (e) => {
         especialidadValue,
         fotoPerfilValue
     )
-    console.log(result);
+
     if (result === true) {
         const registro = {
             email: `${emailValue}`,
-            nombre: `${emailValue}`,
-            password: `${emailValue}`,
-            anos_experiencia: `${emailValue}`,
-            especialidad: `${emailValue}`,
+            nombre: `${nombreValue}`,
+            password: `${passwordValue}`,
+            anos_experiencia: `${aniosExperienciaValue}`,
+            especialidad: `${especialidadValue}`,
             foto: "url_de_la_foto.jpg",
             estado: true
         }
-
+        
         try {
-            const response = await fetch('http://localhost:3001/api/skaters', {
+            const response = await fetch('http://localhost:3001/api/auth/signIn', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(registro)
             });
+            console.log(response);
             if (response.ok) {
                 const jsonresponse = await response.json();
                 console.log(jsonresponse);
