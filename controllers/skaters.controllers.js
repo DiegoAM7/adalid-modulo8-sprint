@@ -1,5 +1,14 @@
 import service from '../services/skaters.service.js';
 
+export const getSkater = async (req, res) => {
+	const skaters = await service.getSkater(req, res);
+
+	return res.status(skaters.code).json({
+		message: skaters.message,
+		skaters: skaters.skaters,
+	});
+};
+
 export const getSkaters = async (req, res) => {
 	const skaters = await service.getSkaters();
 
@@ -13,7 +22,7 @@ export const createSkater = async (req, res) => {
 	const skater = await service.createSkater(req, res);
 
 	return res.status(skater.code).json({
-		code:skater.code,
+		code: skater.code,
 		message: skater.message,
 		skater: skater.skater,
 	});

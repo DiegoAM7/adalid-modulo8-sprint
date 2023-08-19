@@ -40,7 +40,7 @@ actualizarBtn.addEventListener('click', async (e) => {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/skaters/${emailValue}', {
+            const response = await fetch(`http://localhost:3001/api/skaters/${emailValue}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,15 +49,57 @@ actualizarBtn.addEventListener('click', async (e) => {
             });
             if (response.ok) {
                 const jsonresponse = await response.json();
-                console.log(jsonresponse);
             }
-
-
         } catch (error) {
             console.log(error);
         }
     }
 
+})
+
+eliminarBtn.addEventListener('click', async(e)=>{
+    e.preventDefault();
+
+    const emailValue = emailInput.value;
+    const nombreValue = nombreInput.value;
+    const passwordValue = passwordInput.value;
+    const rePasswordValue = rePasswordInput.value;
+    const aniosExperienciaValue = aniosExperienciaInput.value;
+    const especialidadValue = especialidadInput.value;
+    
+    const result = validaciones(
+        emailValue,
+        nombreValue,
+        passwordValue,
+        rePasswordValue,
+        aniosExperienciaValue,
+        especialidadValue,
+    )
+
+    if (result === true) {
+        const registro = {
+            email: `${emailValue}`,
+            nombre: `${nombreValue}`,
+            password: `${passwordValue}`,
+            anos_experiencia: `${aniosExperienciaValue}`,
+            especialidad: `${especialidadValue}`
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3001/api/skaters/${emailValue}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(registro)
+            });
+            if (response.ok) {
+                const jsonresponse = await response.json();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 })
 
 // Función para validar el formato de email
@@ -146,11 +188,5 @@ const validaciones = (email, nombre, password, repitaPassword, aniosExperiencia,
         removeError(especialidadInput);
     }
 
-    // Validación de foto de perfil
-    // if (!fotoPerfil) {
-    //     addError(fotoPerfilInput, "Selecciona una foto de perfil.");
-    // } else {
-    //     removeError(fotoPerfilInput);
-    // }
     return isValid;
 }

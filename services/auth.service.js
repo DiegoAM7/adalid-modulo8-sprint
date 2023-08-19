@@ -6,10 +6,9 @@ import Skater from '../models/skaters.models.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-console.log(SECRET_PASS,ITERACIONES);
 export const signUp = async (req, res) => {
 	const { email, password } = req.body;
-    console.log("========>",password);
+    
 	try {
 		const foundUser = await Skater.findOne({ where: { email: email } });
 
@@ -58,7 +57,7 @@ export const singIn = async (req, res) => {
 	try {
 		const salt = await bcryptjs.genSalt(parseInt(ITERACIONES));
 		const hashedPassword = await bcryptjs.hash(password, salt);
-		console.log(hashedPassword);
+
 		if (
 			!email ||
 			!nombre ||

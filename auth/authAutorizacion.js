@@ -15,13 +15,15 @@ export const auth = (req, res, next) => {
     // validamos que el prefijo sea Bearer o Tolen
     if (type === 'Bearer' || type === "Token") {
       // validamos con el SECRET que el token sea valido
-      jwt.verify(token, SECRET_PASS, (err, dedcode) => {
+      jwt.verify(token, SECRET_PASS, (err, decoded) => {
         if (err) {
           // Si el token no es válido.
           return res.status(401).json({ message: 'Acceso no autorizado' })
         }
+        req.user = decoded.skater;
+        console.log(decoded.skater);
+        next();
       });
-      next();
     } else {
       return res.status(401).json({ message: 'Acceso no autorizado' })
     }

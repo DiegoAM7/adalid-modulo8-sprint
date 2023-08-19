@@ -1,4 +1,5 @@
 import {
+	getSkater,
 	getSkaters,
 	createSkater,
 	updateSkater,
@@ -9,7 +10,8 @@ import { auth } from '../auth/authAutorizacion.js';
 
 const router = Router();
 
-router.get('/', auth, getSkaters);
+router.get('/:id', getSkater);
+router.get('/', getSkaters);
 router.post('/', auth, createSkater);
 router.put('/:id', auth, updateSkater);
 router.delete('/:id', auth, deleteSkater);
